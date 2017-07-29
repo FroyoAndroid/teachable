@@ -44,7 +44,7 @@ function getPatientList(req, res, next) {
         .then(function (resp) {
             if (resp) {
                 // fetch docs
-                dbMngr.searchDoc(studyModel, req.params)
+                dbMngr.fetchDoc(studyModel, req.params)
                     .then(docs => {
                         res.send(docs);
                     });
@@ -59,6 +59,6 @@ module.exports = function (router) {
     // /acoount/study
     router.post('/', savePatientData);
     router.get('/', getAllPatientList);
-    router.get('/user/:user', getPatientList);
+    router.get('/user/:userName', getPatientList);
     return router;
 };

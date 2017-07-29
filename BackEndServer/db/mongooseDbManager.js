@@ -31,13 +31,16 @@ function MongooseDbManager(dbname) {
                 resolve = res;
                 reject = rej;
             });
-        var model;
+        var model = paramsObj;
+        if(!model){
+            model = {};
+        }
         // if (paramsObj) {
         //     model = new Model(paramsObj);
         // } else {
         //     model = new Model();
         // }
-        Model.find({}, function (err, docs) {
+        Model.find(model, function (err, docs) {
             if (err) {
                 reject(false);
             }
