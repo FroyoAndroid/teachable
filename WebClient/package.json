@@ -1,0 +1,42 @@
+{
+  "name": "radiology-frontend",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "concurrently \"npm run tsc:w\" \"npm run lite\" ",
+    "tsc": "tsc",
+    "tsc:w": "tsc -w",
+    "lite": "lite-server",
+    "typings": "typings",
+    "postinstall": "typings install"
+  },
+  "dependencies": {
+    "@angular/common": "^4.0.3",
+    "@angular/compiler": "~4.0.0",
+    "@angular/core": "~4.0.0",
+    "@angular/forms": "^4.0.3",
+    "@angular/http": "~4.0.0",
+    "@angular/platform-browser": "~4.0.0",
+    "@angular/platform-browser-dynamic": "~4.0.0",
+    "@angular/router": "~4.0.0",
+    "angular-in-memory-web-api": "~0.3.0",
+    "core-js": "^2.4.1",
+    "cornerstone-web-image-loader": "^0.8.2",
+    "es6-shim": "^0.35.0",
+    "ng2-smart-table": "^1.2.1",
+    "ng2-table": "^1.3.2",
+    "reflect-metadata": "^0.1.2",
+    "rxjs": "^5.0.1",
+    "systemjs": "0.19.25",
+    "zone.js": "^0.8.4"
+  },
+  "devDependencies": {
+    "concurrently": "^2.0.0",
+    "cornerstone": "github:chafey/cornerstone",
+    "cornerstoneMath": "github:chafey/cornerstoneMath",
+    "cornerstoneTools": "github:chafey/cornerstoneTools",
+    "jquery": "^2.2.3",
+    "lite-server": "^2.1.0",
+    "typescript": "^1.8.9",
+    "typings": "^0.7.11"
+  }
+}
