@@ -43,5 +43,13 @@ var loginRouterModule = require('./src/routes/login.ctrl.js'),
 // /account/register
 rootRouter.use('/login', loginRouter);
 
+/**
+ *  /account/study
+ */
+var studyRouterModule = require('./src/routes/studyList.ctrl.js'),
+  studyRouter = studyRouterModule(express.Router());
+// Registering parent router with the child router
+// /account/register
+rootRouter.use('/study', studyRouter);
 
 module.exports = app;
