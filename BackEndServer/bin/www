@@ -5,14 +5,14 @@
  */
 
 var app = require('../app');
-var debug = require('debug')('cornerstone:server');
+var debug = require('debug')('authenticate-api:server');
 var http = require('http');
 
 /**
  * Get port from environment and store in Express.
  */
 
-var port = normalizePort(process.env.PORT || '3005');
+var port = normalizePort(process.env.PORT || '3020');
 app.set('port', port);
 
 /**

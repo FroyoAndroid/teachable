@@ -1,83 +1,55 @@
-var express = require('express');
-var path = require('path');
-var favicon = require('serve-favicon');
-var logger = require('morgan');
-var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
+var express = require('express'),
+  bodyParser = require('body-parser'),
+  // instance of express library
+  // Using the body parser
+  app = express(),
+  fs = require('fs'),
+  nconf = require('nconf');
 
-//require db Files
-var db = require('./model/db');
-var csImages = require('./model/csImages');
+//Setting up configuration ovbject of our project through nconf
+// optional config for developer convenience
+var localConfigFile = __dirname + '/config/config-local.json';
+if (fs.existsSync(localConfigFile)) {
+  var configFileContents = JSON.parse(fs.readFileSync(localConfigFile));
+  nconf.overrides(configFileContents);
+  console.log('::LOCAL:: found config overrides in config-local.json!!');
+}
 
-//require router files.
-var routes = require('./routes/index');
-var images = require('./routes/images');
 
-var app = express();
 
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
+// app.use('Whatever u need to use')
+app.use(bodyParser.json()); // support json encoded bodies
 
-// uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
-app.use(logger('dev'));
+//Setting up the parent root of our application
+// Routers
+var rootRouter = express.Router();
+app.use('/account', rootRouter);
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
 
-/*app.use(express.methodOverride());
-app.use(express.multipart());*/
+// Register the children with the root Router
+// /account/register
+var registerRouterModule = require('./src/routes/register.ctrl.js'),
+  registerRouter = registerRouterModule(express.Router());
+// Registering parent router with the child router
+// /account/register
+rootRouter.use('/register', registerRouter);
 
-app.use(cookieParser());
 
-app.use(function (req, res, next) {
 
-    // Website you wish to allow to connect
-    res.setHeader('Access-Control-Allow-Origin', '*');
 
-    // Request methods you wish to allow
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
 
-    // Request headers you wish to allow
-    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+/**
+ *  /account/login
+ */
 
-    // Set to true if you need the website to include cookies in the requests sent
-    // to the API (e.g. in case you use sessions)
-    res.setHeader('Access-Control-Allow-Credentials', true);
-
-    // Pass to next layer of middleware
-    next();
-});
-
-app.use(express.static(path.join(__dirname, 'public')));
-
-app.use('/', routes);
-app.use('/images', images);
-
-// catch 404 and forward to error handler
-app.use(function(req, res, next) {
-	var err = new Error('Not Found');
-	err.status = 404;
-	next(err);
-});
-
-// Make our db accessible to our router
-app.use(function(req,res,next){
-    req.db = db;
-    next();
-});
-
-// error handler
-
-app.use(function(err, req, res, next) {
-	// set locals, only providing error in development
-	res.locals.message = err.message;
-	res.locals.error = req.app.get('env') === 'development' ? err : {};
-
-	// render the error page
-	res.status(err.status || 500);
-	res.render('error');
-});
-
+/**
+ *  /account/logout
+ */
+// var server = app.listen(3008);
+// server.on('error', function () {
+//   console.info('Cant run on the above');
+// });
+// server.on('listening', function () {
+//   console.info('Server listening');
+// })
 module.exports = app;
