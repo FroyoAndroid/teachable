@@ -34,22 +34,14 @@ var registerRouterModule = require('./src/routes/register.ctrl.js'),
 // /account/register
 rootRouter.use('/register', registerRouter);
 
-
-
-
-
 /**
  *  /account/login
  */
+var loginRouterModule = require('./src/routes/login.ctrl.js'),
+  loginRouter = loginRouterModule(express.Router());
+// Registering parent router with the child router
+// /account/register
+rootRouter.use('/login', loginRouter);
 
-/**
- *  /account/logout
- */
-// var server = app.listen(3008);
-// server.on('error', function () {
-//   console.info('Cant run on the above');
-// });
-// server.on('listening', function () {
-//   console.info('Server listening');
-// })
+
 module.exports = app;

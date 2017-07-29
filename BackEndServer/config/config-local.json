@@ -1,0 +1,9 @@
+{
+    
+    "env" : "local",
+    "port": {
+        "value" : 3008,
+        "ERROR_MSG": "Problem connecting to PORT",
+        "SUCCESS_MSG": "Connection is good"
+    }
+}
