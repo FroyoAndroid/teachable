@@ -35,11 +35,6 @@ function MongooseDbManager(dbname) {
         if(!model){
             model = {};
         }
-        // if (paramsObj) {
-        //     model = new Model(paramsObj);
-        // } else {
-        //     model = new Model();
-        // }
         Model.find(model, function (err, docs) {
             if (err) {
                 reject(false);
