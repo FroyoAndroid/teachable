@@ -3,7 +3,9 @@ var DbManager = require("d:/xampp/htdocs/myProjects/radiologyproject/BackEndServ
 dbMngr = new DbManager('register'),
     tableName = 'reg_tbl',
     bcrypt = require('bcrypt'),
-    sendmail = require('sendmail');
+    sendmail = require('sendmail'),
+    nodemailer = require('nodemailer'),
+    EmailService = require('../common/mail-service');
 
 function getRegisterUsers(req, res, next) {
     console.info('RegisteringInside GET  /account/register');
@@ -44,35 +46,26 @@ function registerUser(req, res, next) {
                     // Store hash in your password DB.
                     dbMngr.insertDoc(userModel, response)
                         .then(docs => {
-                            let transporter = nodemailer.createTransport({
-                                host: 'smtp.example.com',
-                                port: 465,
-                                secure: true, // secure:true for port 465, secure:false for port 587
-                                auth: {
-                                    user: 'username@example.com',
-                                    pass: 'userpass'
-                                }
-                            });
-
-                            // setup email data with unicode symbols
-                            let mailOptions = {
-                                from: 'ghosesoumya001@gmail.com', // sender address
-                                to: 'ghoshsoumya001@gmail.com', // list of receivers
-                                subject: 'Registration', // Subject line
-                                text: 'Status of Registration', // plain text body
-                                html: '<b>Successfully Registered</b>' // html body
-                            };
-
-                            // send mail with defined transport object
-                            transporter.sendMail(mailOptions, (error, info) => {
-                                if (error) {
-                                    return console.log(error);
-                                }
-                                console.log('Message %s sent: %s', info.messageId, info.response);
-                            });
-
+                            var emailObj = new EmailService(nodemailer);
+                            // sender, receiver, mailSubject, content, htmlContent
+                            emailObj.sendMail('ghosesoumya001@gmail.com', userMail,
+                             `Registration notification`, `Registration of ${userMail} Successfull`, `<h1> Welcome to radiology app</h1>`)
+                                .then(mailRes => {
+                                    console.info(mailRes);
+                                   var response = {
+                                       "msg" : 'User Registered. A mail sent to your account',
+                                       "from" : mailRes.envelope.from,
+                                       "messageId" : mailRes.messageId,
+                                       "status" : "200 OK"
+                                   }
+                                    res.status(200).send(response);
+                                })
+                                .catch(err => {
+                                    res.status(500).send(err);
+                                });
                         })
                         .catch(err => {
+                            console.error(err)
                             res.status(500).send('Error in db insertion');
                         })
                 });

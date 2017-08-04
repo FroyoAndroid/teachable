@@ -57,7 +57,7 @@ function MongooseDbManager(dbname) {
             resolve(true);
         });
         return insertPromise;
-
+       // return Promise.resolve(true)
     };
     this.updateDoc = function (Model, paramsObj) {
                  var resolve, reject,
