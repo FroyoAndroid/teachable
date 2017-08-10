@@ -1,5 +1,5 @@
-var DbManager = require("d:/xampp/htdocs/myProjects/radiologyproject/BackEndServer/db/mongooseDbManager.js"),
-    userModel = require("d:/xampp/htdocs/myProjects/radiologyproject/BackEndServer/models/user.js")
+var DbManager = require(global.relSrcPath+"/db/mongooseDbManager.js"),
+    userModel = require(global.relSrcPath+"/models/user.js")
 dbMngr = new DbManager('register'),
     tableName = 'reg_tbl',
     bcrypt = require('bcrypt'),
@@ -77,14 +77,7 @@ function registerUser(req, res, next) {
         });
 }
 
-function validateUser(req, resp, next) {
-    console.info('VALIDATING : Inside GET  /account/register/validate');
-    next();
-}
 
-function validateUserInfo(req, res, next) {
-
-}
 
 module.exports = function (router) {
     // /acoount/register

@@ -1,5 +1,5 @@
-var DbManager = require("d:/xampp/htdocs/myProjects/radiologyproject/BackEndServer/db/mongooseDbManager.js"),
-    userModel = require("d:/xampp/htdocs/myProjects/radiologyproject/BackEndServer/models/user.js")
+var DbManager = require(global.relSrcPath+"/db/mongooseDbManager.js"),
+    userModel = require(global.relSrcPath+"models/user.js")
 dbMngr = new DbManager('register'),
     tableName = 'Registration_tbl';
 

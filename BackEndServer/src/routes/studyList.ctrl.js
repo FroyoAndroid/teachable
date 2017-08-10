@@ -1,5 +1,5 @@
-var DbManager = require("d:/xampp/htdocs/myProjects/radiologyproject/BackEndServer/db/mongooseDbManager.js"),
-    studyModel = require("d:/xampp/htdocs/myProjects/radiologyproject/BackEndServer/models/study.js")
+var DbManager = require(global.relSrcPath+"/db/mongooseDbManager.js"),
+    studyModel = require(global.relSrcPath+"/models/study.js")
 dbMngr = new DbManager('study'),
     tableName = 'studyList_tbl';
 
