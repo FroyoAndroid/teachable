@@ -1,0 +1,45 @@
+{
+  "name": "metis",
+  "version": "1.0.0",
+  "description": "A portal for radiologist to view and manage medical images in web browser",
+  "main": "index.js",
+  "scripts": {
+    "watch": "cross-env NODE_ENV=development webpack --progress --watch --hide-modules",
+    "build": "cross-env NODE_ENV=production webpack --progress --hide-modules",
+    "server": "nodemon server/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@gitlab.gitesoft.com:Gitesoft/metis.git"
+  },
+  "author": "GiteSoft",
+  "license": "ISC",
+  "private": true,
+  "dependencies": {
+    "axios": "^0.16.2",
+    "base64-img": "^1.0.3",
+    "body-parser": "^1.17.2",
+    "express": "^4.15.3",
+    "filereader": "^0.10.3",
+    "nifti-reader-js": "^0.5.4",
+    "vue": "^2.3.3",
+    "vue-router": "^2.7.0",
+    "xmlhttprequest": "^1.8.0"
+  },
+  "devDependencies": {
+    "babel-core": "^6.0.0",
+    "babel-loader": "^6.0.0",
+    "babel-preset-env": "^1.5.1",
+    "cross-env": "^3.0.0",
+    "css-loader": "^0.25.0",
+    "expose-loader": "^0.7.3",
+    "file-loader": "^0.9.0",
+    "node-sass": "^4.5.0",
+    "nodemon": "^1.11.0",
+    "sass-loader": "^5.0.1",
+    "vue-loader": "^12.1.0",
+    "vue-template-compiler": "^2.3.3",
+    "webpack": "^2.6.1",
+    "webpack-dev-server": "^2.4.5"
+  }
+}
