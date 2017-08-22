@@ -55,4 +55,14 @@ var studyRouterModule = require('./src/routes/studyList.ctrl.js'),
 // /account/register
 rootRouter.use('/study', studyRouter);
 
+/**
+ *  Google Drive authentication API
+ */
+var oAuthRouterModule = require('./src/routes/g-drive-oAuth.ctrl.js'),
+  oAuthRouter = oAuthRouterModule(express.Router());
+// Registering parent router with the child router
+// /account/oAuth
+rootRouter.use('/oAuth', oAuthRouter);
+
+
 module.exports = app;

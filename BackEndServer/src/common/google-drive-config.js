@@ -10,5 +10,7 @@ function googleDriveManager() {
     this.authenticateGogDrive = () => {
         //obtain OAuth 2.0 credentials such as a client ID and client secret
 
+        //Obtain an access token from the Google Authorization Server
+
     }
 }

@@ -1,5 +1,5 @@
 var DbManager = require(global.relSrcPath+"/db/mongooseDbManager.js"),
-    userModel = require(global.relSrcPath+"models/user.js")
+    userModel = require(global.relSrcPath+"/models/user.js")
 dbMngr = new DbManager('register'),
     tableName = 'Registration_tbl';
 
