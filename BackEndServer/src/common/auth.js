@@ -8,12 +8,12 @@ var AuthorizationManager = function (OAuth2) {
     // function AuthorizationManager(OAuth2) {
     //     _oAuth = OAuth2;
     // }
-    var getOAuthClient = () => {
+     this.getOAuthClient = () => {
         return new _oAuth(clientDetails.clientId, clientDetails.clientSecret, clientDetails.redirectUrl);
     }
 
      this.getAuthUrl = () => {
-        var oauth2Client = getOAuthClient();
+        var oauth2Client = this.getOAuthClient();
         // generate a url that asks permissions for Google+ and Google Calendar scopes
         var url = oauth2Client.generateAuthUrl({
             access_type: 'offline',
