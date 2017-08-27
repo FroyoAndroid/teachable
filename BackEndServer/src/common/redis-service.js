@@ -29,8 +29,8 @@ var Redis = function() {
 
 Redis.prototype.set = function(key, value, expires, callback) {
     this.client.set(key, value, function(err, cacheReply) {
-        console.verbose('[Redis] set cache - key:', key, ' expires: ', expires);
-        console.debug('[Redis] set cache - value:', value);
+        console.info('[Redis] set cache - key:', key, ' expires: ', expires);
+        console.info('[Redis] set cache - value:', value);
         if (err !== null) {
             console.error('Redis set error: ', err);
         }
