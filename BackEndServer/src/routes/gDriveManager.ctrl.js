@@ -31,7 +31,7 @@ var GDriveManager = function () {
         generateFileDetails = (file, parentPath, parentFolderId) => {
             var fileMetadata = {
                     'name': file,
-                    parents: parentFolderId
+                    parents: [parentFolderId]
                 },
                 fileExt = path.extname(file),
                 mime = (/\.(dcm|jpg|jpeg|nifti|png)$/i).test(file) ? `image/${fileExt.substring(1)}` : '';
