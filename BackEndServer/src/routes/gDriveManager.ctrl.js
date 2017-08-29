@@ -20,10 +20,10 @@ var GDriveManager = function () {
                     if (err) {
                         // Handle error
                         console.log(err);
-                        res.status(400).send('Upload error' + err);
+                        //res.status(400).send('Upload error' + err);
                     } else {
                         console.log('File Id: ', file.id);
-                        res.status(200).send('File successfully uploaded with id:' + file.id)
+                       // res.status(200).send('File successfully uploaded with id:' + file.id)
                     }
                 });
             console.info(reqUrl.uri.href)
