@@ -16,7 +16,7 @@ var google = require('googleapis'),
 var GDriveManager = function () {
     var oAuthToken, oAuthClient;
 
-    function GDriveOAuth() {}
+    function GDriveOAuth() { }
     this.testoAuth = (req, res, next) => {
         var url = authSvc.getAuthUrl();
         res.send(url);
@@ -63,11 +63,28 @@ var GDriveManager = function () {
         });
 
     }
+    /**
+     *
+     * https://content.googleapis.com/drive/v3/files?key=AIzaSyD-a9IF8KKYgoC3cpgS-Al7hLQDbugrDcw
+        :method:GET
+        authorization:Bearer ya29.Glu3BNnv2kI99EyJ02o5i7VgpCWLp4sZTYc3Jg-4a5-Te3Ef01knR_oXMXLtXBz5UwPKCEyUFK2KkOaFEZqBk5livbowVny-TvGHzoYx65CjNVuQVfM_Huqz37wo
+        x-origin:https://explorer.apis.google.com
+        x-referer:https://explorer.apis.google.com
+     */
     this.listData = (req, res, next) => {
         var oauth2Client = authSvc.getOAuthClient();
         redis.get('token_abc', function (err, tokens) {
             if (err || !tokens) res.status(404).send('token not found');
             else {
+                // req.get("https://content.googleapis.com/drive/v3/files?key=AIzaSyD-a9IF8KKYgoC3cpgS-Al7hLQDbugrDcw",
+                // {
+                //     ":scheme":"https",
+                //     "authorization": "Bearer ya29.Glu3BNnv2kI99EyJ02o5i7VgpCWLp4sZTYc3Jg-4a5-Te3Ef01knR_oXMXLtXBz5UwPKCEyUFK2KkOaFEZqBk5livbowVny-TvGHzoYx65CjNVuQVfM_Huqz37wo",
+                //     "x-origin": "https://explorer.apis.google.com",
+                //     "x-referer": "https://explorer.apis.google.com"
+                // }, function (err, response) {
+                //     console.log(response);
+                // })
                 oauth2Client.setCredentials(JSON.parse(tokens));
                 var drive = google.drive({
                     version: 'v3',
@@ -78,8 +95,9 @@ var GDriveManager = function () {
                         mimeType: 'application/vnd.google-apps.folder'
                     }
                 }, function (data) {
-                    console.info(data);
-                    if (data === null) res.status(400).send([]);
+                    if (!global.resBody) res.status(400).send([]);
+                    else 
+                        res.status(200).send(global.resBody.files);
                 });
             }
 
