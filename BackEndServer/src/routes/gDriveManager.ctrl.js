@@ -14,17 +14,22 @@ var google = require('googleapis'),
     tableName = 'token_tbl',
     UploadManagerSvc = require('../common/uploadManager.svc.js');
 var GDriveManager = function () {
-    var oAuthToken, oAuthClient;
-
-    function GDriveOAuth() { }
+    var oAuthToken, oAuthClient,
+        oauth2Client = authSvc.getOAuthClient(),
+        getConfiguredDrive = (oauth2Client, driveVersion) => {
+            return google.drive({
+                version: driveVersion,
+                auth: oauth2Client
+            });
+        };
     this.testoAuth = (req, res, next) => {
         var url = authSvc.getAuthUrl();
         res.send(url);
 
     }
     this.createToken = function (req, res, next) {
-        oAuthClient = oauth2Client = authSvc.getOAuthClient(),
-            session = req.session,
+
+        var session = req.session,
             code = req.query.code;
         oauth2Client.getToken(code, function (err, tokens) {
             // Now tokens contains an access_token and an optional refresh_token. Save them.
@@ -86,19 +91,53 @@ var GDriveManager = function () {
                 //     console.log(response);
                 // })
                 oauth2Client.setCredentials(JSON.parse(tokens));
-                var drive = google.drive({
-                    version: 'v3',
-                    auth: oauth2Client
-                });
+                var drive = getConfiguredDrive(oauth2Client, 'v3');
                 drive.files.list({
-                    media: {
-                        mimeType: 'application/vnd.google-apps.folder'
-                    }
+                    pageSize: 10
                 }, function (data) {
                     if (!global.resBody) res.status(400).send([]);
-                    else 
+                    else
                         res.status(200).send(global.resBody.files);
                 });
+            }
+
+        });
+
+    }
+    this.getData = (req, res, next) => {
+
+        redis.get('token_abc', function (err, tokens) {
+            if (err || !tokens) res.status(404).send('token not found');
+            else {
+                oauth2Client.setCredentials(JSON.parse(tokens));
+                var drive = getConfiguredDrive(oauth2Client, 'v3');
+                drive.files.get({ fileId: req.params["fileId"] }, function (data) {
+                    if (!global.resBody) res.status(400).send('File Not found');
+                    else
+                        res.status(200).send(global.resBody);
+                });
+            }
+        });
+
+    }
+    this.downloadFile = (req, res, next) => {
+        var dest = fs.createWriteStream(`/tmp/photo${Math.random() * 100}.jpg`);
+        redis.get('token_abc', function (err, tokens) {
+            if (err || !tokens) res.status(404).send('token not found');
+            else {
+                oauth2Client.setCredentials(JSON.parse(tokens));
+                var drive = getConfiguredDrive(oauth2Client, 'v3');
+                drive.files.get({
+                    fileId: req.params["fileId"],
+                    alt: 'media'
+                })
+                .on('end', function () {
+                    res.send('Download Done');
+                })
+                .on('error', function (err) {
+                    res.send('Error during download', err);
+                })
+                .pipe(dest);
             }
 
         });
@@ -115,7 +154,9 @@ module.exports = function (router) {
     router.get('/token', gDriveAuthObj.createToken);
     // /account/uload
     router.post('/upload/:filename', gDriveAuthObj.uploadData);
-    // /account/list
+    // /account/oauth/list
     router.get('/list', gDriveAuthObj.listData);
+    // /account/oauth/get
+    router.get('/download/:fileId', gDriveAuthObj.downloadFile);
     return router;
 }
