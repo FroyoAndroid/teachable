@@ -63,7 +63,7 @@ var GDriveManager = function () {
             else {
                 oauth2Client.setCredentials(JSON.parse(tokens));
                 var uploadMgr = new UploadManagerSvc(google, oauth2Client, fs_promisified, path);
-                uploadMgr.upload(req.params['filename'])
+                uploadMgr.upload(req.params['filename'], res)
             }
         });
 
@@ -154,6 +154,8 @@ module.exports = function (router) {
     router.get('/token', gDriveAuthObj.createToken);
     // /account/uload
     router.post('/upload/:filename', gDriveAuthObj.uploadData);
+    // /account/oauth/get
+    router.get('/getFile/:fileId', gDriveAuthObj.getData);
     // /account/oauth/list
     router.get('/list', gDriveAuthObj.listData);
     // /account/oauth/get
