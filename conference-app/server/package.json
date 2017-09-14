@@ -9,6 +9,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "opentok": "^2.6.0"
+    "body-parser": "^1.18.1",
+    "express": "^4.15.4",
+    "morgan": "^1.8.2",
+    "opentok": "^2.6.0",
+    "path": "^0.12.7",
+    "serve-favicon": "^2.4.4"
   }
 }
