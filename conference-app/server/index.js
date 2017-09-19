@@ -8,10 +8,25 @@ const express = require('express'),
     bodyParser = require('body-parser'),
     config = require('./config/config'),
     log = console.log,
-    router = require('./router');
+    router = require('./router'),
+    mongoose = require('mongoose'),
+    Promise = require('bluebird');
+
+Promise.promisifyAll(mongoose);
 
 const server = app.listen(config.port);
 log(`Server is running on port ${config.port}`);
+
+
+// Mongoose connect
+
+mongoose.connect(config.mongodb, (error) => {
+    if(error) {
+        throw error;
+    } else {
+        log('Mongodb connected');
+    }
+});
 
 // Setting up basic middleware for all Express requests
 app.use(logger('dev'));// Log requests to API using morgan
