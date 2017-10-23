@@ -1,6 +1,5 @@
-// var OpenTok = require('opentok'),
-// opentok = new OpenTok(apiKey, apiSecret);
 const express = require('express'),
+    cors = require('cors'),
     app = express(),
     favicon = require('serve-favicon'),
     path = require('path'),
@@ -29,6 +28,7 @@ mongoose.connect(config.mongodb, (error) => {
 });
 
 // Setting up basic middleware for all Express requests
+app.use(cors());
 app.use(logger('dev'));// Log requests to API using morgan
 app.use(bodyParser.json());
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
