@@ -1,0 +1,93 @@
+html,
+body {
+    height: 100%;
+    margin: 0;
+    color: #83cab1;
+    font-family: 'Roboto', sans-serif;
+}
+
+
+i.fa {
+    font-family: FontAwesome;
+    font-size: 20px;
+}
+
+.btn-default {
+    color: #fff;
+    background-color: #83cab1;
+    border-color: #83cab1;
+}
+
+.btn-default:hover {
+    color: #fff;
+    background-color: #66DBB0;
+    border-color: #66DBB0;
+}
+
+.btn-default:focus {
+    color: #fff;
+    background-color: #66DBB0;
+    border-color: #66DBB0;
+}
+
+.btn-clear {
+    color: #000000;
+    background-color: rgba(255,255,255,0.15);
+    border-color: rgba(255,255,255,0.15);
+}
+
+.btn-round {
+    border-radius: 20px;
+}
+
+.btn-go-live{
+    width: 100px;
+}
+
+div {
+    border-radius: 2px solid #afafaf;
+}
+
+header.video-header {
+    height: 70px;
+    padding: 15px;
+    border-bottom: 3px solid #f5f3f3;
+}
+
+span.header {
+    font-size: 35px;
+    font-family: 'Modak', cursive;
+}
+
+section {
+    height: 100%;
+}
+
+footer.video-footer {
+    position: absolute;
+    height: 70px;
+    width: 100%;
+    color: #fff;
+    bottom: 0;
+    border-top: 3px solid #f5f3f3;
+}
+
+/* video section */
+
+section.video-section {
+    text-align: center;
+}
+
+.video-section .publisher-video{
+    margin: 5%;
+    width: 525px;
+    height: 350px;
+    border-radius: 5px;
+    box-shadow: 0px 1px 3px 0px;
+}
+
+.controls .btn-group {
+    height: 65px;
+    padding: 10px;
+}
+
